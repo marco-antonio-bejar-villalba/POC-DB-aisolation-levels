@@ -1,4 +1,4 @@
-package org.marco.poc.pocdbaisolationlevels.rest;
+package org.marco.poc.pocdbisolationlevels.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +13,11 @@ public interface UserApiPort {
     ResponseEntity<UserRequest> createUser(@RequestBody UserRequest userRequest);
 
     @PutMapping
-    ResponseEntity<UserRequest> updateUser(@RequestBody UserRequest userRequest);
+    ResponseEntity<UserRequest> updateUser(@RequestBody UserRequest userRequest, @RequestHeader("traceId") String traceId);
 
     @GetMapping("/{id}")
     ResponseEntity<UserRequest> getUserById(@PathVariable String id);
 
     @GetMapping
     ResponseEntity<List<UserRequest>> getAll();
-
-
 }

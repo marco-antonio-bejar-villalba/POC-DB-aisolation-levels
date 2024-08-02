@@ -1,4 +1,4 @@
-package org.marco.poc.pocdbaisolationlevels.rest;
+package org.marco.poc.pocdbisolationlevels.rest;
 
 import lombok.*;
 
@@ -14,5 +14,4 @@ public class UserRequest {
     private String email;
     private String password;
     private String role;
-
 }

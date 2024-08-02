@@ -3,10 +3,13 @@ spring:
   jpa:
     show-sql: true
   application:
-    name: POC-DB-aisolation-levels
+    name: POC-DB-isolation-levels
   datasource:
-    password: poc
-    username: poc
-    url: jdbc:mariadb://localhost:3306/poc?useSSL=false
+    password: mypassword
+    username: root
+    url: jdbc:mariadb://mariadb:3306/poc?useSSL=false
 server:
   port: 9001
+logging:
+  pattern:
+    correlation: '[${spring.application.name:},%X{traceId:-},%X{spanId:-}]'

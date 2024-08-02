@@ -1,11 +1,12 @@
-package org.marco.poc.pocdbaisolationlevels;
+package org.marco.poc.pocdbisolationlevels;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 public class LogUtils {
 
-    private static final ObjectWriter OBJECT_WRITER = new ObjectMapper().writerWithDefaultPrettyPrinter();
+    private static final ObjectWriter OBJECT_WRITER =
+            new ObjectMapper().writerWithDefaultPrettyPrinter();
 
     public static String asJsonString(Object object) {
         try {
@@ -14,5 +15,4 @@ public class LogUtils {
             throw new RuntimeException(e);
         }
     }
-
 }

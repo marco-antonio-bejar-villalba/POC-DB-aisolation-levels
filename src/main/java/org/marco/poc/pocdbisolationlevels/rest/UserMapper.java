@@ -1,7 +1,6 @@
-package org.marco.poc.pocdbaisolationlevels.rest;
+package org.marco.poc.pocdbisolationlevels.rest;
 
-
-import org.marco.poc.pocdbaisolationlevels.persistence.User;
+import org.marco.poc.pocdbisolationlevels.persistence.User;
 
 public interface UserMapper {
 
@@ -26,5 +25,4 @@ public interface UserMapper {
                 .role(userRequest.getRole())
                 .build();
     }
-
 }

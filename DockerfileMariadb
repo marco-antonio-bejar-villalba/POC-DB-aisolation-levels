@@ -1,0 +1,9 @@
+FROM ubuntu:latest
+
+# Install MariaDB client tools
+RUN apt-get update && apt-get install -y mariadb-client
+
+# Set the working directory
+WORKDIR /app
+
+# docker run -it --network infrastructure_general mariadb-client

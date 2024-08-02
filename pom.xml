@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -11,8 +12,8 @@
     <groupId>org.marco.poc</groupId>
     <artifactId>POC-DB-aisolation-levels</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>POC-DB-aisolation-levels</name>
-    <description>POC-DB-aisolation-levels</description>
+    <name>POC-DB-isolation-levels</name>
+    <description>POC-DB-isolation-levels</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -38,7 +39,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
@@ -56,6 +60,50 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <images>
+                        <image>
+                            <alias>poc-db-isolation-levels</alias>
+                            <name>marco/poc-db-isolation-levels</name>
+                            <build>
+                                <tags>
+                                    <tag>latest</tag>
+                                </tags>
+                                <from>openjdk:17-jdk-alpine</from>
+                                <args>
+                                    <spring.profiles.active>docker</spring.profiles.active>
+                                </args>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <cmd>
+                                    ["java", "-jar", "/maven/${project.build.finalName}.jar"]
+                                </cmd>
+                            </build>
+                            <run>
+                                <network>
+                                    <name>
+                                        infrastructure_general
+                                    </name>
+                                </network>
+                                <ports>
+                                    <port>9001:9001</port>
+                                </ports>
+                                <wait>
+                                    <time>30000</time>
+                                    <url>http://localhost:9001/actuator/health</url>
+                                </wait>
+                                <env>
+                                    <SPRING_PROFILES_ACTIVE>docker</SPRING_PROFILES_ACTIVE>
+                                </env>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
             </plugin>
         </plugins>
     </build>
